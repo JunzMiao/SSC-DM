@@ -12,6 +12,7 @@ The Proposed Method
 <p><img src="./figures/fig_2.png" alt="test" width="800"></p>
 
 Let $\boldsymbol{X}=\{\boldsymbol{x}_{1},\boldsymbol{x}_{2},\cdots,\boldsymbol{x}_{B}\}$ be the natural training set, $\boldsymbol{X_{ad}}=\{\boldsymbol{x }^{ad}_{1},\boldsymbol{x}^{ad}_{2},\cdots,\boldsymbol{x}^{ad}_{B}\}$ are the adversarial samples corresponding to $\boldsymbol{X}$, $\boldsymbol{Y}=\{y_{1},y_{2},\cdots ,y_{B}\}$ are the labels. Most of the defense methods simply add the classification loss of the adversarial samples to the loss function, which is mathematically expressed as:
+
 $$
     L=\alpha L(\boldsymbol{\theta},\boldsymbol{X},\boldsymbol{Y})+\beta L(\boldsymbol{\theta},\boldsymbol{X_{ad}},\boldsymbol{Y})
 $$
