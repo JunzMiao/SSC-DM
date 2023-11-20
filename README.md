@@ -5,11 +5,11 @@ This repository is an implementation of the paper "[An Effective Deep Learning A
 Introduction
 ----
 This paper proposes an effective deep learning adversarial defense method, which incorporates information about the spatial structures of the natural and the adversarial samples in the embedding space during the training process.
-
+<p><img src="fig_6.pdf" alt="test" width="800"></p>
 
 Predictive Behavior of CNN on Adversarial Samples
 ----
-<p><img src="Figures/Motivation.PNG" alt="test" width="800"></p
+<p><img src="Figures/Motivation.PNG" alt="test" width="800"></p>
 
 Empirical investigation on the predictive behavior of CNN on adversarial samples from CIFAR-10 and CIFAR-100. The line (black, right y-axis) represents the number of increased successful attacks when perturbation is increased from its previous grid value. Each bar (left y-axis) represents the percentage of misclassification for the increased successful attacks, measuring number of adversarial samples are misclassified into the 2nd, 3rd, 4th and 5th most probable classes. FGSM and MIM are attack methods.
       
