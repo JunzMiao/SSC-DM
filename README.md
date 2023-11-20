@@ -11,11 +11,12 @@ The Proposed Method
 ----
 <p><img src="./figures/fig_2.png" alt="test" width="800"></p>
 
-Let $\boldsymbol{X}=\{\boldsymbol{x}_{1},\boldsymbol{x}_{2},\cdots,\boldsymbol{x}_{B}\}$ be the natural training set, $\boldsymbol{X_{ad}}=\{\boldsymbol{x }^{ad}_{1},\boldsymbol{x}^{ad}_{2},\cdots,\boldsymbol{x}^{ad}_{B}\}$ are the adversarial samples corresponding to $\boldsymbol{X}$, $\boldsymbol{Y}=\{y_{1},y_{2},\cdots ,y_{B}\}$ are the labels. Most of the defense methods simply add the classification loss of the adversarial samples to the loss function, which is mathematically expressed as:
+Let $\boldsymbol{X}={\boldsymbol{x_{1}},\boldsymbol{x_{2}},\cdots,\boldsymbol{x_{B}}}$ be the natural training set, $\boldsymbol{X_{ad}}=\{\boldsymbol{x_{1}}^{ad},\boldsymbol{x_{2}}^{ad},\cdots,\boldsymbol{x_{B}^{ad}}\}$ are the adversarial samples corresponding to $\boldsymbol{X}$, $\boldsymbol{Y}=\{y_{1},y_{2},\cdots ,y_{B}\}$ are the labels. Most of the defense methods simply add the classification loss of the adversarial samples to the loss function, which is mathematically expressed as:
 
 $$
     L=\alpha L(\boldsymbol{\theta},\boldsymbol{X},\boldsymbol{Y})+\beta L(\boldsymbol{\theta},\boldsymbol{X_{ad}},\boldsymbol{Y})
 $$
+
 where $\boldsymbol{\theta}$ is the parameters of DNNs, and $\boldsymbol{X_{ad}}$ are the adversarial samples carfted based on $\boldsymbol{X}$. We call this method Adv Train in this paper.
 
 Mathematically, the loss function of the method proposed in this paper is expressed as:
@@ -24,14 +25,16 @@ $$
     L=\alpha L(\boldsymbol{\theta},\boldsymbol{X},\boldsymbol{Y})+\beta L(\boldsymbol{\theta},\boldsymbol{X_{ad}},\boldsymbol{Y})+\lambda L_{s}(S(\boldsymbol{X}),S(\boldsymbol{X_{ad}}))
 $$
 
-where $S(\boldsymbol{X})$ is a $B\times B$ symmetric matrix representing the distance measure of the dataset $\boldsymbol{X}$, $S(\boldsymbol{X})_{ij}=Dis(\boldsymbol{x}_{i},\boldsymbol {x}_{j})$.
+where $S(\boldsymbol{X})$ is a $B\times B$ symmetric matrix representing the distance measure of the dataset $\boldsymbol{X}$, $S(\boldsymbol{X_{ij}})=Dis(\boldsymbol{x_{i}},\boldsymbol {x_{j}})$.
 
 $$
     L_{s}=\frac{1}{B}\|{\rm softmax}(S(\boldsymbol{X}))-{\rm softmax}(S(\boldsymbol{X_{ad}}))\|_{2}
 $$
 
+The distance measure is expressed as:
+
 $$
-    Dis(\boldsymbol{x}_{i},\boldsymbol{x}_{j})=\sqrt{(\boldsymbol{x}_{i}-\boldsymbol{x}_{j})^{T}(\boldsymbol{x}_{i}-\boldsymbol{x}_{j})}
+    Dis(\boldsymbol{x_{i}},\boldsymbol{x_{j}})=\sqrt{(\boldsymbol{x_{i}}-\boldsymbol{x_{j}})^{T}(\boldsymbol{x_{i}}-\boldsymbol{x_{j}})}
 $$
       
 Penalty Factor $\lambda$
