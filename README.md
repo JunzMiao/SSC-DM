@@ -5,7 +5,7 @@ This repository is an implementation of the paper "[An Effective Deep Learning A
 Introduction
 ----
 This paper proposes an effective deep learning adversarial defense method, which incorporates information about the spatial structures of the natural and the adversarial samples in the embedding space during the training process.
-<p><img src="fig_6.pdf" alt="test" width="800"></p>
+<p><img src="./figures/fig_1.png" alt="test" width="800"></p>
 
 Predictive Behavior of CNN on Adversarial Samples
 ----
