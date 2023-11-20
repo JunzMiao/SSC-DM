@@ -7,39 +7,36 @@ Introduction
 This paper proposes an effective deep learning adversarial defense method, which incorporates information about the spatial structures of the natural and the adversarial samples in the embedding space during the training process.
 <p><img src="./figures/fig_1.png" alt="test" width="800"></p>
 
-Predictive Behavior of CNN on Adversarial Samples
+The Proposed Method
 ----
-<p><img src="Figures/Motivation.PNG" alt="test" width="800"></p>
+<p><img src="./figures/fig_2.png" alt="test" width="800"></p>
 
-Empirical investigation on the predictive behavior of CNN on adversarial samples from CIFAR-10 and CIFAR-100. The line (black, right y-axis) represents the number of increased successful attacks when perturbation is increased from its previous grid value. Each bar (left y-axis) represents the percentage of misclassification for the increased successful attacks, measuring number of adversarial samples are misclassified into the 2nd, 3rd, 4th and 5th most probable classes. FGSM and MIM are attack methods.
+Let $\boldsymbol{X}=\{\boldsymbol{x}_{1},\boldsymbol{x}_{2},\cdots,\boldsymbol{x}_{B}\}$ be the natural training set, $\boldsymbol{X_{ad}}=\{\boldsymbol{x }^{ad}_{1},\boldsymbol{x}^{ad}_{2},\cdots,\boldsymbol{x}^{ad}_{B}\}$ are the adversarial samples corresponding to $\boldsymbol{X}$, $\boldsymbol{Y}=\{y_{1},y_{2},\cdots ,y_{B}\}$ are the labels. Most of the defense methods simply add the classification loss of the adversarial samples to the loss function, which is mathematically expressed as:
+$$
+    L=\alpha L(\boldsymbol{\theta},\boldsymbol{X},\boldsymbol{Y})+\beta L(\boldsymbol{\theta},\boldsymbol{X_{ad}},\boldsymbol{Y})
+$$
+where $\boldsymbol{\theta}$ is the parameters of DNNs, and $\boldsymbol{X_{ad}}$ are the adversarial samples carfted based on $\boldsymbol{X}$. We call this method Adv Train in this paper.
+
+Mathematically, the loss function of the method proposed in this paper is expressed as:
+
+$$
+    L=\alpha L(\boldsymbol{\theta},\boldsymbol{X},\boldsymbol{Y})+\beta L(\boldsymbol{\theta},\boldsymbol{X_{ad}},\boldsymbol{Y})+\lambda L_{s}(S(\boldsymbol{X}),S(\boldsymbol{X_{ad}}))
+$$
+
+where $S(\boldsymbol{X})$ is a $B\times B$ symmetric matrix representing the distance measure of the dataset $\boldsymbol{X}$, $S(\boldsymbol{X})_{ij}=Dis(\boldsymbol{x}_{i},\boldsymbol {x}_{j})$.
+
+$$
+    L_{s}=\frac{1}{B}\|{\rm softmax}(S(\boldsymbol{X}))-{\rm softmax}(S(\boldsymbol{X_{ad}}))\|_{2}
+$$
+
+$$
+    Dis(\boldsymbol{x}_{i},\boldsymbol{x}_{j})=\sqrt{(\boldsymbol{x}_{i}-\boldsymbol{x}_{j})^{T}(\boldsymbol{x}_{i}-\boldsymbol{x}_{j})}
+$$
       
-
-Demo of Training effect
+Penalty Factor $\lambda$
 ----
-<p><img src="Figures/Effect.PNG" alt="test" width="400"></p>
-
-Here, we demonstrate the synergistic effect of the gaps at both probability and feature levels. As shown in the top, the average probability gaps between the true class and the most probable false class of ResNet-56 on CIFAR-100 testdata are 0.527 (CE loss) vs. 0.558 (PC loss). And for Tiny ImageNet test data the gaps become 0.131 (CE loss) vs. 0.231 (PC loss). These results demonstrate that our PC loss can directly enlarge the probability gap of prediction and the effect is more pronounced for more challenging dataset (Tiny ImageNet). As shown in the bottom, ResNet-56 trained with our PC loss has clear margin boundaries and samples of each classes are evenly distributed around the center with a minimal overlap on CIFAR-10 test data.
-
-
-Results
-----
-<p><img src="Figures/MNIST.PNG" alt="test" width="800"></p>
-
-T-SNE visualization of the penultimate layer of the model trained by CE loss (a,b) and our PC loss (c,d) on MNIST dataset. (a,c) display only clean images whereas (b,d) also include successful attacks generated with FGSM.
-For a model trained with PC loss, due to the large margin between classes, the adversarial samples are harder to cross the boundaries with the only exception that the adversarial samples are distributed near the center of the feature space where hard samples are usually located.
-
-
-Model Training and Evaluation
-----
-
-PC loss with logit constraints
-* The PC loss is defined in "hard_margin_loss.py", while the Logit Constraints is defined in "margin_loss_soft_logit.py". As shown in the "vgg_training.py" file, by simply importing these two components and using them as a drop-in replacement of the CE loss, they can directly improve model's adversarial robustness for free. 
-
-Other files
-* The "vgg_training.py" shows how to use our method to do the training while "adv_testing.py" shows how to do the adversarial testing. The "models" folder contains all model architectures used in the experiments, which can be used to replace models in "vgg_training.py".
-
-Note that the model needs warm-up with CE loss, and more training details can be found in our paper.
-
+The $\lambda$ is taken to be 10, 50, 100, 300, 500, and 1000 for analyzing. For LeNet-MNIST, the strength of the three attacks for each attack method, $\epsilon$, is taken to range from 0.01 to 0.3, with intervals of 0.01. The results of the experiments are shown as:
+<p><img src="./figures/fig_3.png" alt="test" width="800"></p>
 
 Dependencies
 -----
